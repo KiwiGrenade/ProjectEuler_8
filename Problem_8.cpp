@@ -7,22 +7,25 @@
 //substr(start,end)-substracts a portion of a string (line)
 //stoi(string,nullptr,10-for decimal) itconverts string
 //(the part of the line) to integer
+
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <utility>
 using namespace std;
-pair<string,int> biggestNumberInLine(string line)
+
+pair <string, long long> biggestNumberInLine(string line)
 {
     string linePart,biggestNumber;
-    int digits,div=10,sum=1,biggestSum=0;
-    for (int i=0;i<line.size()-4;i++)
+    long long digits,sum=1,biggestSum=0;
+    for (int i=0;i<line.size()-13;i++)
     {
-        linePart=line.substr(i,4);//substracting part of the line
-        digits=stoi(linePart,nullptr);//converting it to integer
-        for (int n=0;n<=4;n++)
+        linePart=line.substr(i,13);//substracting part of the line
+        digits=stoll(linePart,nullptr);//converting it to integer
+        for (int n=0;n<=13;n++)
         {
-            sum=sum*(digits%div);//multiplying the sum by the last digit
+            //cout << sum << '\n';
+            sum=sum*(digits%10);//multiplying the sum by the last digit
             digits=digits/10;//cutting of the last digit
             if (sum>biggestSum)
             {
@@ -32,26 +35,33 @@ pair<string,int> biggestNumberInLine(string line)
         }
         sum=1;
     }
-    pair <string,int> factor ("biggestNumber",biggestSum);
+    pair <string,long long> factor (biggestNumber,biggestSum);
     return factor;
 }
 int main()
 {
+    string theNumber;
+    long long theSum=0;
     fstream numberFile;
     string line;
     numberFile.open("Number.txt");
     if (numberFile.good()==true)
     {
-        for (int i=0;i<20;i++)
-        {
         getline(numberFile,line);
         biggestNumberInLine(line);
+        if (get<1>(biggestNumberInLine(line)) > theSum)
+        {
+            theNumber=get<0>(biggestNumberInLine(line));
+            theSum=get<1>(biggestNumberInLine(line));
         }
+
     }
+
     else
     {
         cout << "Error: File is not opening";
     }
+    cout << theNumber << " = " << theSum << '\n';
     numberFile.close();
     return 0;
 }
