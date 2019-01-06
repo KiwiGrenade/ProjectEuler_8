@@ -24,7 +24,6 @@ pair <string, long long> biggestNumberInLine(string line)
         digits=stoll(linePart,nullptr);//converting it to integer
         for (int n=0;n<=13;n++)
         {
-            //cout << sum << '\n';
             sum=sum*(digits%10);//multiplying the sum by the last digit
             digits=digits/10;//cutting of the last digit
             if (sum>biggestSum)
